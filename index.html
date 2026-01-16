@@ -52,5 +52,14 @@
   </div>
 
   <script src="app.js"></script>
+  <script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/debateos-ld/sw.js')
+      .then(reg => console.log('Service Worker registered'))
+      .catch(err => console.error('Service Worker failed:', err));
+  });
+}
+</script>
 </body>
 </html>
