@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>DebateOS – LD</title>
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#9381FF">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #F4F6FF;
+      color: #2D2A4A;
+      margin: 0;
+      padding: 20px;
+    }
+    .card {
+      background: #EEF0FF;
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+    button {
+      background: #9381FF;
+      color: white;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    textarea, input {
+      width: 100%;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>DebateOS – Lincoln Douglas</h1>
+
+  <div class="card">
+    <h3>New Case</h3>
+    <input id="title" placeholder="Case title">
+    <textarea id="content" placeholder="Case text"></textarea>
+    <button onclick="saveCase()">Save Case</button>
+  </div>
+
+  <div class="card">
+    <h3>Saved Cases</h3>
+    <div id="cases"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
