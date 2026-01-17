@@ -1,36 +1,122 @@
+/* ============================
+   GLOBAL STYLES
+============================ */
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: Georgia, "Times New Roman", serif;
   background: #F4F6FF;
   color: #2D2A4A;
   margin: 0;
   padding: 20px;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   color: #2D2A4A;
 }
 
+/* ============================
+   CARD COMPONENT
+============================ */
+
 .card {
-  background: #EEF0FF;
+  background: #EAFBFB; /* light tint of new blue */
   padding: 16px;
   border-radius: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-button {
-  background: #9381FF;
-  color: white;
-  border: none;
-  padding: 10px 14px;
-  border-radius: 8px;
-  cursor: pointer;
+.card h4 {
+  font-size: 18px;
 }
 
-textarea, input {
+.card p {
+  font-size: 14px;
+}
+
+/* ============================
+   FORM ELEMENTS
+============================ */
+
+input,
+textarea {
   width: 100%;
   margin-top: 6px;
+  margin-bottom: 8px;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-family: inherit;
 }
-/* Calendar container styling */
+
+textarea {
+  resize: vertical;
+}
+
+/* ============================
+   BUTTONS
+============================ */
+
+button {
+  background: #DDA0EB; /* NEW purple */
+  color: #2D2A4A;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 4px;
+  margin-bottom: 8px;
+  font-family: inherit;
+}
+
+button:hover {
+  background: #c88fe0;
+}
+
+/* ============================
+   CASE EDITOR LAYOUT
+============================ */
+
+.editor-layout {
+  display: flex;
+  gap: 20px;
+}
+
+.editor-main {
+  flex: 3;
+}
+
+.editor-sidebar {
+  flex: 1;
+}
+
+/* ============================
+   COMMENTS SIDEBAR
+============================ */
+
+#comments-list .comment {
+  background: #ffffff;
+  border-left: 4px solid #DDA0EB; /* NEW purple */
+  padding: 8px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+#comments-list small {
+  color: #666;
+}
+
+#comments-list button {
+  margin-top: 4px;
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+/* ============================
+   CALENDAR STYLES
+============================ */
+
 .calendar-container {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -42,46 +128,23 @@ textarea, input {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Calendar day styling */
 .calendar-day {
   padding: 15px;
   text-align: center;
-  background-color: #EEF0FF;
+  background-color: #EAFBFB; /* new blue tint */
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* Hover effect for calendar day */
 .calendar-day:hover {
-  background-color: #9381FF;
-  color: white;
+  background-color: #90F5F5; /* NEW blue */
+  color: #2D2A4A;
 }
 
-/* Today’s day highlight */
 .calendar-day.today {
-  background-color: #FFCA5B;
-  color: white;
+  background-color: #DDA0EB; /* NEW purple */
+  color: #2D2A4A;
   font-weight: bold;
 }
-
-/* Task list card styling */
-.card {
-  background-color: #EEF0FF;
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.card h4 {
-  color: #2D2A4A;
-  font-size: 18px;
-}
-
-.card p {
-  color: #2D2A4A;
-  font-size: 14px;
-}
-
