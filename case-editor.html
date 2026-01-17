@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DebateOS – Case Editor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1 id="doc-title">Case Editor</h1>
+
+  <div class="card">
+    <h3>Case Info</h3>
+    <input id="editor-title" placeholder="Case title" />
+    <input id="editor-folder" placeholder="Folder" />
+
+    <select id="editor-side">
+      <option value="Aff">Aff</option>
+      <option value="Neg">Neg</option>
+    </select>
+  </div>
+
+  <div class="card">
+    <h3>Framework</h3>
+    <input id="editor-value" placeholder="Value" />
+    <input id="editor-criterion" placeholder="Criterion" />
+  </div>
+
+  <div class="card">
+    <h3>Topcase</h3>
+    <textarea id="editor-intro" placeholder="Intro"></textarea>
+    <textarea id="editor-res-analysis" placeholder="Resolutional analysis"></textarea>
+    <textarea id="editor-offcase" placeholder="Offcase arguments"></textarea>
+  </div>
+
+  <div class="card">
+    <h3>Contentions</h3>
+    <div id="contentions"></div>
+    <button onclick="addContention()">+ Add Contention</button>
+  </div>
+
+  <div class="card">
+    <button onclick="saveCase()">Save</button>
+    <button onclick="goBack()">Back to Cases</button>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="case-editor.js"></script>
+</body>
+</html>
