@@ -30,4 +30,15 @@ function createFolder(name) {
   saveFolders(folders);
   return folder;
 }
+/********************************
+ * COMMENTS DATA HELPERS
+ ********************************/
+
+function getComments() {
+  return getData("comments");
+}
+
+function saveComments(comments) {
+  saveData("comments", comments);
+}
 
