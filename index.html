@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DebateOS Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#9381FF">
+</head>
+<body>
+  <h1>DebateOS Dashboard</h1>
+
+  <div class="card">
+    <h3>Navigate to:</h3>
+    <button onclick="location.href='cases.html'">Cases</button>
+    <button onclick="location.href='research.html'">Research</button>
+    <button onclick="location.href='flow.html'">Flows</button>
+    <button onclick="location.href='ai.html'">AI Assistant</button>
+  </div>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('Service Worker registered'))
+          .catch(err => console.error('Service Worker failed:', err));
+      });
+    }
+  </script>
+</body>
+</html>
