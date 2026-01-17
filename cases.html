@@ -6,12 +6,23 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Manage Your Cases</h1>
 
+  <h1>DebateOS – Case Management</h1>
+
+  <!-- =====================
+       REGULAR LD CASES
+  ====================== -->
   <div class="card">
     <h3>Create New Case</h3>
+
     <input id="title" placeholder="Case title" />
-    <textarea id="content" placeholder="Case content"></textarea>
+    <input id="folder" placeholder="Folder (e.g. Sept/Oct 2026)" />
+
+    <input id="value" placeholder="Value" />
+    <input id="criterion" placeholder="Criterion" />
+
+    <textarea id="content" placeholder="Contention 1 text"></textarea>
+
     <button onclick="saveCase()">Save Case</button>
   </div>
 
@@ -20,7 +31,73 @@
     <div id="cases"></div>
   </div>
 
+  <!-- =====================
+       TOPCASES
+  ====================== -->
+  <div class="card">
+    <h3>Create Topcase</h3>
+
+    <input id="topcase-title" placeholder="Topcase title" />
+    <input id="topcase-folder" placeholder="Folder" />
+
+    <select id="topcase-side">
+      <option value="Aff">Aff</option>
+      <option value="Neg">Neg</option>
+    </select>
+
+    <textarea id="topcase-resolution" placeholder="Resolution"></textarea>
+    <textarea id="topcase-intro" placeholder="Intro"></textarea>
+
+    <input id="topcase-value" placeholder="Value" />
+    <input id="topcase-criterion" placeholder="Criterion" />
+
+    <textarea id="topcase-res-analysis" placeholder="Resolutional analysis"></textarea>
+    <textarea id="topcase-offcase" placeholder="Offcase arguments"></textarea>
+
+    <button onclick="saveTopcase()">Save Topcase</button>
+  </div>
+
+  <div class="card">
+    <h3>Saved Topcases</h3>
+    <div id="topcases"></div>
+  </div>
+
+  <!-- =====================
+       BLOCKS
+  ====================== -->
+  <div class="card">
+    <h3>Create Block</h3>
+
+    <input id="block-title" placeholder="Block title" />
+    <input id="block-folder" placeholder="Folder" />
+
+    <select id="block-side">
+      <option value="Aff">Aff</option>
+      <option value="Neg">Neg</option>
+    </select>
+
+    <select id="block-type">
+      <option value="Frontline">Frontline</option>
+      <option value="Extension">Extension</option>
+      <option value="Overview">Overview</option>
+      <option value="Turn">Turn</option>
+    </select>
+
+    <textarea id="block-text" placeholder="Block text"></textarea>
+
+    <button onclick="saveBlock()">Save Block</button>
+  </div>
+
+  <div class="card">
+    <h3>Saved Blocks</h3>
+    <div id="blocks"></div>
+  </div>
+
+  <!-- =====================
+       SCRIPTS
+  ====================== -->
   <script src="app.js"></script>
   <script src="cases.js"></script>
+
 </body>
 </html>
