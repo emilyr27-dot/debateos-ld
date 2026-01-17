@@ -29,13 +29,22 @@
   <h1>Tournaments Management</h1>
 
   <!-- Section for adding tasks -->
-  <div class="card">
-    <h3>Add Tournament Task</h3>
-    <input id="task-title" placeholder="Task Title" />
-    <input id="task-date" type="date" />
-    <textarea id="task-details" placeholder="Details of the task"></textarea>
-    <button onclick="addTask()">Add Task</button>
-  </div>
+<div class="card">
+  <h3>Add Tournament Task</h3>
+  <input id="task-title" placeholder="Task Title" />
+  <input id="task-date" type="date" />
+  <textarea id="task-details" placeholder="Details of the task"></textarea>
+  
+  <!-- Folder selection for tasks -->
+  <select id="task-folder">
+    <option value="">Select Folder</option>
+    <option value="Research">Research</option>
+    <option value="Practice">Practice</option>
+    <option value="Tournaments">Tournaments</option>
+  </select>
+  
+  <button onclick="addTask()">Add Task</button>
+</div>
 
   <!-- Section for displaying tasks -->
   <h3>Upcoming Tasks</h3>
