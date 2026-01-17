@@ -34,34 +34,29 @@ function archiveTask(index) {
 
 // Function to delete a task (remove it permanently)
 function deleteTask(index) {
+  // Remove the task from the tasks array
   tasks.splice(index, 1);
+  
+  // Update localStorage and re-render the task list
   localStorage.setItem("tasks", JSON.stringify(tasks));
+  
+  // Re-render the tasks and calendar after deletion
   renderTasks();
+  renderCalendar();
 }
 
-// Function to render the archived tasks (on the Archive Page)
-function renderArchivedTasks() {
-  const archivedTaskListDiv = document.getElementById("archived-task-list");
-  archivedTaskListDiv.innerHTML = "";
-  archivedTasks.forEach((task) => {
-    const taskDiv = document.createElement("div");
-    taskDiv.classList.add("card");
-    taskDiv.innerHTML = `
-      <h4>${task.title}</h4>
-      <p>${task.details}</p>
-      <p>Date: ${task.date}</p>
-    `;
-    archivedTaskListDiv.appendChild(taskDiv);
-  });
-}
-
-// Function to render the calendar
+// Function to render the calendar (including the month name)
 function renderCalendar() {
   const today = new Date();
   const currentMonth = today.getMonth();
   const currentYear = today.getFullYear();
 
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+  // Display the name of the current month
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const monthNameDiv = document.getElementById("month-name");
+  monthNameDiv.innerHTML = `${monthNames[currentMonth]} ${currentYear}`;
 
   calendarDiv.innerHTML = "";
 
