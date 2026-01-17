@@ -1,62 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>DebateOS – Case Editor</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <h1 id="doc-title">Case Editor</h1>
+<h1 id="doc-title">Case Editor</h1>
 
-  <div class="card">
-    <h3>Case Info</h3>
-    <input id="editor-title" placeholder="Case title" />
-    <input id="editor-folder" placeholder="Folder" />
+<div class="editor-layout">
 
-    <select id="editor-side">
-      <option value="Aff">Aff</option>
-      <option value="Neg">Neg</option>
-    </select>
-  </div>
+  <!-- =====================
+       MAIN DOCUMENT
+  ====================== -->
+  <div class="editor-main">
 
-  <div class="card">
-    <h3>Framework</h3>
-    <input id="editor-value" placeholder="Value" />
-    <input id="editor-criterion" placeholder="Criterion" />
-  </div>
+    <div class="card">
+      <h3>Case Info</h3>
+      <input id="editor-title" placeholder="Case title" />
+      <input id="editor-folder" placeholder="Folder" />
 
-  <div class="card">
-    <h3>Topcase</h3>
-   <textarea id="editor-intro"></textarea>
-<button onclick="addComment('intro', null)">💬 Comment</button>
-   <textarea id="editor-res-analysis"></textarea>
-<button onclick="addComment('res-analysis', null)">💬 Comment</button>
-    <textarea id="editor-offcase"></textarea>
-<button onclick="addComment('offcase', null)">💬 Comment</button>
-    <input id="editor-value" />
-<button onclick="addComment('value', null)">💬 Comment</button>
-<input id="editor-criterion" />
-<button onclick="addComment('criterion', null)">💬 Comment</button>
+      <select id="editor-side">
+        <option value="Aff">Aff</option>
+        <option value="Neg">Neg</option>
+      </select>
+    </div>
 
+    <div class="card">
+      <h3>Framework</h3>
 
-  <div class="card">
-    <h3>Contentions</h3>
-    <div id="contentions"></div>
-    <button onclick="addContention()">+ Add Contention</button>
-  </div>
+      <label>Value</label>
+      <input id="editor-value" placeholder="Value" />
+      <button onclick="addComment('value', null)">💬 Comment</button>
 
-  <div class="card">
-    <button onclick="saveCase()">Save</button>
-    <button onclick="goBack()">Back to Cases</button>
-  </div>
+      <label>Criterion</label>
+      <input id="editor-criterion" placeholder="Criterion" />
+      <button onclick="addComment('criterion', null)">💬 Comment</button>
+    </div>
 
-  <script src="app.js"></script>
-  <script src="case-editor.js"></script>
+    <div class="card">
+      <h3>Topcase</h3>
 
-  <div id="comments-panel" class="card">
-  <h3>Comments</h3>
-  <div id="comments-list"></div>
-</div>
-</body>
-</html>
+      <label>Intro</label>
+      <textarea id="editor-intro"></textarea>
+      <button onclick="addComment('intro', null)">💬 Comment</
