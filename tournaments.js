@@ -1,49 +1,67 @@
 // Simple Task Management and Calendar for Tournaments
 
-// Get reference to the task list display area
 const taskListDiv = document.getElementById("task-list");
+const calendarDiv = document.getElementById("calendar");
 
-// Fetch tasks from localStorage (or use an empty array if none exist)
 let tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
 
-// Function to render tasks on the page
+// Function to render tasks
 function renderTasks() {
-  taskListDiv.innerHTML = ""; // Clear current list
-
-  // Loop through tasks and create HTML for each task
+  taskListDiv.innerHTML = "";
   tasks.forEach(task => {
     const taskDiv = document.createElement("div");
-    taskDiv.classList.add("card"); // Add styling to each task
+    taskDiv.classList.add("card");
     taskDiv.innerHTML = `
       <h4>${task.title}</h4>
       <p>${task.details}</p>
       <p>Date: ${task.date}</p>
     `;
-    taskListDiv.appendChild(taskDiv); // Add task div to the list
+    taskListDiv.appendChild(taskDiv);
   });
 }
 
-// Function to add a task to localStorage and re-render
+// Function to render the calendar
+function renderCalendar() {
+  const daysInMonth = new Date(2026, 1, 0).getDate(); // Example: February 2026
+  const currentMonth = new Date().getMonth();
+  const currentYear = new Date().getFullYear();
+
+  calendarDiv.innerHTML = ""; // Clear current calendar
+
+  // Create a grid of days
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dayDiv = document.createElement("div");
+    dayDiv.classList.add("calendar-day");
+    dayDiv.innerHTML = day;
+
+    // Check if there are tasks for this day
+    tasks.forEach(task => {
+      const taskDate = new Date(task.date);
+      if (taskDate.getDate() === day && taskDate.getMonth() === currentMonth && taskDate.getFullYear() === currentYear) {
+        dayDiv.innerHTML += `<br><small>${task.title}</small>`;
+      }
+    });
+
+    calendarDiv.appendChild(dayDiv);
+  }
+}
+
+// Function to add a task
 function addTask() {
   const title = document.getElementById("task-title").value.trim();
   const date = document.getElementById("task-date").value.trim();
   const details = document.getElementById("task-details").value.trim();
 
-  // Validate if all fields are filled
-  if (!title || !date || !details) {
-    return alert("Please fill in all fields.");
-  }
+  if (!title || !date || !details) return alert("Please fill in all fields.");
 
-  // Create a new task object
   const newTask = { title, date, details };
-
-  // Push new task to the tasks array and save it in localStorage
   tasks.push(newTask);
   localStorage.setItem("tasks", JSON.stringify(tasks));
 
-  // Re-render the task list
-  renderTasks();
+  renderTasks(); // Re-render tasks
+  renderCalendar(); // Re-render calendar with new tasks
 }
 
-// Initial render of tasks when the page loads
+// Initial render of tasks and calendar
 renderTasks();
+renderCalendar();
