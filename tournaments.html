@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DebateOS – Tournaments</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Tournaments Management</h1>
+
+  <div class="card">
+    <h3>Add Tournament Task</h3>
+    <input id="task-title" placeholder="Task Title" />
+    <input id="task-date" type="date" />
+    <textarea id="task-details" placeholder="Details of the task"></textarea>
+    <button onclick="addTask()">Add Task</button>
+  </div>
+
+  <h3>Upcoming Tasks</h3>
+  <div id="task-list"></div>
+
+  <h3>Upcoming Tournaments</h3>
+  <div id="calendar"></div>
+
+  <button onclick="location.href='index.html'">Back to Dashboard</button>
+
+  <script src="tournaments.js"></script>
+</body>
+</html>
