@@ -28,10 +28,17 @@
 
   <div class="card">
     <h3>Topcase</h3>
-    <textarea id="editor-intro" placeholder="Intro"></textarea>
-    <textarea id="editor-res-analysis" placeholder="Resolutional analysis"></textarea>
-    <textarea id="editor-offcase" placeholder="Offcase arguments"></textarea>
-  </div>
+   <textarea id="editor-intro"></textarea>
+<button onclick="addComment('intro', null)">💬 Comment</button>
+   <textarea id="editor-res-analysis"></textarea>
+<button onclick="addComment('res-analysis', null)">💬 Comment</button>
+    <textarea id="editor-offcase"></textarea>
+<button onclick="addComment('offcase', null)">💬 Comment</button>
+    <input id="editor-value" />
+<button onclick="addComment('value', null)">💬 Comment</button>
+<input id="editor-criterion" />
+<button onclick="addComment('criterion', null)">💬 Comment</button>
+
 
   <div class="card">
     <h3>Contentions</h3>
