@@ -98,13 +98,14 @@ function addTask() {
   const title = document.getElementById("task-title").value.trim();
   const date = document.getElementById("task-date").value;
   const details = document.getElementById("task-details").value.trim();
+  const folder = document.getElementById("task-folder").value; // New code to grab folder
 
-  if (!title || !date || !details) {
-    alert("Please fill in all fields");
+  if (!title || !date || !details || !folder) {
+    alert("Please fill in all fields, including selecting a folder.");
     return;
   }
 
-  tasks.push({ title, details, date });
+  tasks.push({ title, details, date, folder }); // Store folder in the task
   localStorage.setItem("tasks", JSON.stringify(tasks));
 
   renderTasks();
