@@ -1,39 +1,68 @@
 /********************************
- * DebateOS – Case System v2
- * One case = one document
+ * DebateOS – Cases Dashboard
  ********************************/
+
+// ============================
+// DOM REFERENCES
+// ============================
 
 const casesDiv = document.getElementById("cases");
 
-/* ============================
-   CREATE CASE (DOC)
-============================ */
+// ============================
+// DATA HELPERS
+// ============================
+
+function getFolders() {
+  return getData("folders");
+}
+
+function saveFolders(folders) {
+  saveData("folders", folders);
+}
+
+// ============================
+// CREATE CASE
+// ============================
 
 function createCase() {
   const title = document.getElementById("title").value.trim();
-  const folder = document.getElementById("folder").value.trim() || "Unsorted";
+  const folderName =
+    document.getElementById("folder").value.trim() || "Unsorted";
   const side = document.getElementById("side").value;
 
-  if (!title) return alert("Case needs a title");
+  if (!title) return alert("Please enter a case title");
 
+  // Load data
   const cases = getData("cases");
+  let folders = getFolders();
 
+  // Find or create folder
+  let folder = folders.find(f => f.name === folderName);
+  if (!folder) {
+    folder = {
+      id: generateId(),
+      name: folderName,
+      caseIds: []
+    };
+    folders.push(folder);
+  }
+
+  // Create case document
   const newCase = {
     id: generateId(),
     title,
-    folder,
     side,
 
     // Framework (single source of truth)
     value: "",
     criterion: "",
 
-    // Topcase-style sections
+    // Topcase sections
     intro: "",
     resolutionalAnalysis: "",
     offcaseArguments: "",
 
-    // Contentions (start with one)
+    // Contentions
     contentions: [
       {
         id: generateId(),
@@ -48,62 +77,86 @@ function createCase() {
     updatedAt: Date.now()
   };
 
+  // Save case
   cases.push(newCase);
-  saveData("cases", cases);
+  folder.caseIds.push(newCase.id);
 
-  // Open like Google Docs
+  saveData("cases", cases);
+  saveFolders(folders);
+
+  // Open editor like Google Docs
   window.location.href = `case-editor.html?id=${newCase.id}`;
 }
 
-/* ============================
-   RENDER CASE LIST
-============================ */
+// ============================
+// RENDER DASHBOARD
+// ============================
 
 function renderCases() {
   if (!casesDiv) return;
   casesDiv.innerHTML = "";
 
   const cases = getData("cases");
+  const folders = getFolders();
 
-  cases.forEach(c => {
-    const card = document.createElement("div");
-    card.className = "card";
+  folders.forEach(folder => {
+    const folderDiv = document.createElement("div");
+    folderDiv.className = "card";
 
-    card.innerHTML = `
-      <h4>${c.title}</h4>
-      <p><strong>Folder:</strong> ${c.folder}</p>
-      <p><strong>Side:</strong> ${c.side}</p>
-      <p><strong>Contentions:</strong> ${c.contentions.length}</p>
-    `;
+    const header = document.createElement("h3");
+    header.textContent = folder.name;
+    folderDiv.appendChild(header);
 
-    const openBtn = document.createElement("button");
-    openBtn.textContent = "Open";
-    openBtn.onclick = () =>
-      window.location.href = `case-editor.html?id=${c.id}`;
+    folder.caseIds.forEach(caseId => {
+      const c = cases.find(cs => cs.id === caseId);
+      if (!c) return;
 
-    const delBtn = document.createElement("button");
-    delBtn.textContent = "Delete";
-    delBtn.onclick = () => deleteCase(c.id);
+      const caseRow = document.createElement("div");
+      caseRow.className = "case-row";
 
-    card.appendChild(openBtn);
-    card.appendChild(delBtn);
-    casesDiv.appendChild(card);
+      caseRow.innerHTML = `
+        <strong>${c.title}</strong> (${c.side})
+      `;
+
+      const openBtn = document.createElement("button");
+      openBtn.textContent = "Open";
+      openBtn.onclick = () =>
+        window.location.href = `case-editor.html?id=${c.id}`;
+
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "Delete";
+      delBtn.onclick = () => deleteCase(c.id);
+
+      caseRow.appendChild(openBtn);
+      caseRow.appendChild(delBtn);
+      folderDiv.appendChild(caseRow);
+    });
+
+    casesDiv.appendChild(folderDiv);
   });
 }
 
-/* ============================
-   DELETE CASE
-============================ */
+// ============================
+// DELETE CASE
+// ============================
 
-function deleteCase(id) {
+function deleteCase(caseId) {
   let cases = getData("cases");
-  cases = cases.filter(c => c.id !== id);
+  let folders = getFolders();
+
+  cases = cases.filter(c => c.id !== caseId);
+
+  folders.forEach(f => {
+    f.caseIds = f.caseIds.filter(id => id !== caseId);
+  });
+
   saveData("cases", cases);
+  saveFolders(folders);
   renderCases();
 }
 
-/* ============================
-   INIT
-============================ */
+// ============================
+// INIT
+// ============================
 
 renderCases();
