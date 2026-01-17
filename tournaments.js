@@ -1,94 +1,81 @@
-// Simple Task Management and Calendar for Tournaments
+// Tournament Task Management with Calendar, Folders, Delete & Archive
 
 const taskListDiv = document.getElementById("task-list");
 const calendarDiv = document.getElementById("calendar");
-
 let tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
 let archivedTasks = JSON.parse(localStorage.getItem("archivedTasks") || "[]");
 
-// Function to render tasks (including Archive and Delete buttons)
+// --- RENDER TASKS FUNCTION ---
 function renderTasks() {
-  taskListDiv.innerHTML = ""; // Clear the current task list
+  taskListDiv.innerHTML = ""; // Clear task list
 
   // Group tasks by folder
-  const groupedTasks = {
-    Research: [],
-    Practice: [],
-    Tournaments: [],
-  };
-
-  // Loop through all tasks and group them by folder
+  const groupedTasks = {};
   tasks.forEach(task => {
-    if (groupedTasks[task.folder]) {
-      groupedTasks[task.folder].push(task);
-    }
+    const folder = task.folder || "Unsorted";
+    if (!groupedTasks[folder]) groupedTasks[folder] = [];
+    groupedTasks[folder].push(task);
   });
 
-  // Create sections for each folder
+  // Render each folder
   Object.keys(groupedTasks).forEach(folder => {
-    if (groupedTasks[folder].length > 0) {
-      const folderDiv = document.createElement("div");
-      folderDiv.classList.add("folder-section");
+    const folderDiv = document.createElement("div");
+    folderDiv.classList.add("folder-section");
 
-      const folderHeader = document.createElement("h3");
-      folderHeader.innerText = folder; // Folder name (e.g., "Research")
-      folderDiv.appendChild(folderHeader);
+    const folderHeader = document.createElement("h3");
+    folderHeader.innerText = folder;
+    folderDiv.appendChild(folderHeader);
 
-      // Create a list of tasks for this folder
-      groupedTasks[folder].forEach(task => {
-        const taskDiv = document.createElement("div");
-        taskDiv.classList.add("card");
+    groupedTasks[folder].forEach((task, index) => {
+      const taskDiv = document.createElement("div");
+      taskDiv.classList.add("card");
+      taskDiv.innerHTML = `
+        <h4>${task.title}</h4>
+        <p>${task.details}</p>
+        <p>Date: ${task.date}</p>
+        <button onclick="deleteTask(${index})">Delete</button>
+        <button onclick="archiveTask(${index})">Archive</button>
+      `;
+      folderDiv.appendChild(taskDiv);
+    });
 
-        // Create the task content with title, details, and date
-        taskDiv.innerHTML = `
-          <h4>${task.title}</h4>
-          <p>${task.details}</p>
-          <p>Date: ${task.date}</p>
-          <button onclick="deleteTask('${task.date}')">Delete</button>
-          <button onclick="archiveTask('${task.date}')">Archive</button>
-        `;
-        folderDiv.appendChild(taskDiv);
-      });
-
-      taskListDiv.appendChild(folderDiv);
-    }
+    taskListDiv.appendChild(folderDiv);
   });
 }
 
-// Function to delete a task
-function deleteTask(taskDate) {
-  // Filter out the task with the given date
-  tasks = tasks.filter(task => task.date !== taskDate);
-  localStorage.setItem("tasks", JSON.stringify(tasks)); // Save to localStorage
-
-  renderTasks(); // Re-render the tasks after deletion
+// --- DELETE TASK ---
+function deleteTask(index) {
+  tasks.splice(index, 1);
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+  renderTasks();
+  renderCalendar();
 }
 
-// Function to archive a task (move it to archivedTasks)
-function archiveTask(taskDate) {
-  // Find the task by its date and mark it as archived
-  tasks = tasks.map(task => {
-    if (task.date === taskDate) {
-      task.archived = true; // Mark it as archived
-    }
-    return task;
-  });
-  localStorage.setItem("tasks", JSON.stringify(tasks)); // Save to localStorage
-
-  renderTasks(); // Re-render the tasks after archiving
+// --- ARCHIVE TASK ---
+function archiveTask(index) {
+  const task = tasks.splice(index, 1)[0];
+  archivedTasks.push(task);
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+  localStorage.setItem("archivedTasks", JSON.stringify(archivedTasks));
+  renderTasks();
+  renderCalendar();
 }
 
-// Function to render the calendar (including the month name)
+// --- RENDER CALENDAR ---
 function renderCalendar() {
   const today = new Date();
   const currentMonth = today.getMonth();
   const currentYear = today.getFullYear();
-
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-  // Display the name of the current month
-  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  const monthNameDiv = document.getElementById("month-name");
+  // Display current month
+  let monthNameDiv = document.getElementById("month-name");
+  if (!monthNameDiv) {
+    monthNameDiv = document.createElement("h3");
+    monthNameDiv.id = "month-name";
+    calendarDiv.parentNode.insertBefore(monthNameDiv, calendarDiv);
+  }
+  const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
   monthNameDiv.innerHTML = `${monthNames[currentMonth]} ${currentYear}`;
 
   calendarDiv.innerHTML = "";
@@ -98,53 +85,53 @@ function renderCalendar() {
     dayDiv.className = "calendar-day";
     dayDiv.innerHTML = `<strong>${day}</strong>`;
 
-    const dateKey = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    const dateKey = `${currentYear}-${String(currentMonth+1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
 
-    const dayTasks = tasks.filter(t => t.date === dateKey);
-
-    dayTasks.forEach(task => {
+    // Show tasks for this day
+    tasks.filter(t => t.date === dateKey).forEach(task => {
       const taskEl = document.createElement("div");
       taskEl.style.fontSize = "12px";
       taskEl.textContent = "• " + task.title;
       dayDiv.appendChild(taskEl);
     });
 
+    // Click to add task directly from calendar
     dayDiv.onclick = () => {
       const title = prompt("Task title for " + dateKey);
       if (!title) return;
-
       const details = prompt("Task details?");
       if (!details) return;
+      const folder = prompt("Folder name (Research, Practice, Tournaments, etc.)") || "Unsorted";
 
-      tasks.push({ title, details, date: dateKey, folder: "Tournaments" }); // Default folder "Tournaments"
+      tasks.push({ title, details, date: dateKey, folder });
       localStorage.setItem("tasks", JSON.stringify(tasks));
-      renderCalendar();
       renderTasks();
+      renderCalendar();
     };
 
     calendarDiv.appendChild(dayDiv);
   }
 }
 
-// Function to add a task
+// --- ADD TASK FROM FORM ---
 function addTask() {
   const title = document.getElementById("task-title").value.trim();
   const date = document.getElementById("task-date").value;
   const details = document.getElementById("task-details").value.trim();
-  const folder = document.getElementById("task-folder").value; // New code to grab folder
+  const folderInput = document.getElementById("task-folder");
+  const folder = folderInput ? folderInput.value.trim() || "Unsorted" : "Unsorted";
 
-  if (!title || !date || !details || !folder) {
-    alert("Please fill in all fields, including selecting a folder.");
+  if (!title || !date || !details) {
+    alert("Please fill in all fields.");
     return;
   }
 
-  tasks.push({ title, details, date, folder }); // Store folder in the task
+  tasks.push({ title, details, date, folder });
   localStorage.setItem("tasks", JSON.stringify(tasks));
-
   renderTasks();
   renderCalendar();
 }
 
-// Initial render of tasks and calendar
+// --- INITIAL RENDER ---
 renderTasks();
 renderCalendar();
