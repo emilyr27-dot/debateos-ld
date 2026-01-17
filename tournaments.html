@@ -4,10 +4,31 @@
   <meta charset="UTF-8">
   <title>DebateOS – Tournaments</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .calendar-container {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-gap: 10px;
+      margin-top: 20px;
+    }
+    .calendar-day {
+      padding: 10px;
+      text-align: center;
+      background-color: #F4F6FF;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .calendar-day:hover {
+      background-color: #9381FF;
+      color: white;
+    }
+  </style>
 </head>
 <body>
   <h1>Tournaments Management</h1>
 
+  <!-- Section for adding tasks -->
   <div class="card">
     <h3>Add Tournament Task</h3>
     <input id="task-title" placeholder="Task Title" />
@@ -16,14 +37,18 @@
     <button onclick="addTask()">Add Task</button>
   </div>
 
+  <!-- Section for displaying tasks -->
   <h3>Upcoming Tasks</h3>
   <div id="task-list"></div>
 
+  <!-- Placeholder for the calendar -->
   <h3>Upcoming Tournaments</h3>
-  <div id="calendar"></div>
+  <div id="calendar" class="calendar-container"></div>
 
+  <!-- Back to Dashboard button -->
   <button onclick="location.href='index.html'">Back to Dashboard</button>
 
+  <!-- Link to the JavaScript file -->
   <script src="tournaments.js"></script>
 </body>
 </html>
