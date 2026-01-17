@@ -38,10 +38,14 @@ function renderTasks() {
       groupedTasks[folder].forEach(task => {
         const taskDiv = document.createElement("div");
         taskDiv.classList.add("card");
+
+        // Create the task content with title, details, and date
         taskDiv.innerHTML = `
           <h4>${task.title}</h4>
           <p>${task.details}</p>
           <p>Date: ${task.date}</p>
+          <button onclick="deleteTask('${task.date}')">Delete</button>
+          <button onclick="archiveTask('${task.date}')">Archive</button>
         `;
         folderDiv.appendChild(taskDiv);
       });
@@ -50,7 +54,28 @@ function renderTasks() {
     }
   });
 }
+// Function to delete a task
+function deleteTask(taskDate) {
+  // Filter out the task with the given date
+  tasks = tasks.filter(task => task.date !== taskDate);
+  localStorage.setItem("tasks", JSON.stringify(tasks)); // Save to localStorage
 
+  renderTasks(); // Re-render the tasks after deletion
+}
+
+// Function to archive a task
+function archiveTask(taskDate) {
+  // Find the task by its date and mark it as archived
+  tasks = tasks.map(task => {
+    if (task.date === taskDate) {
+      task.archived = true; // Mark it as archived
+    }
+    return task;
+  });
+  localStorage.setItem("tasks", JSON.stringify(tasks)); // Save to localStorage
+
+  renderTasks(); // Re-render the tasks after archiving
+}
 
 // Function to archive a task (move it to archivedTasks)
 function archiveTask(index) {
