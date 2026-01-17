@@ -23,70 +23,57 @@ function renderTasks() {
 // Function to render the calendar
 function renderCalendar() {
   const today = new Date();
-  const currentMonth = today.getMonth();
-  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth(); // Get current month
+  const currentYear = today.getFullYear(); // Get current year
 
-  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate(); // Get number of days in the month
 
-  calendarDiv.innerHTML = "";
+  calendarDiv.innerHTML = ""; // Clear existing calendar
 
+  // Loop through each day of the month
   for (let day = 1; day <= daysInMonth; day++) {
     const dayDiv = document.createElement("div");
-    dayDiv.className = "calendar-day";
-    dayDiv.innerHTML = `<strong>${day}</strong>`;
+    dayDiv.className = "calendar-day"; // Add class for styling
+    dayDiv.innerHTML = `<strong>${day}</strong>`; // Display day number
 
+    // Format date for comparison (YYYY-MM-DD)
     const dateKey = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
 
+    // Filter tasks for the specific date
     const dayTasks = tasks.filter(t => t.date === dateKey);
 
+    // Display the tasks associated with that day
     dayTasks.forEach(task => {
       const taskEl = document.createElement("div");
       taskEl.style.fontSize = "12px";
-      taskEl.textContent = "• " + task.title;
+      taskEl.textContent = "• " + task.title; // Task title
       dayDiv.appendChild(taskEl);
     });
 
+    // Add a click listener to each day
     dayDiv.onclick = () => {
+      // Prompt user for task details if clicking on an empty day or if no tasks are listed
       const title = prompt("Task title for " + dateKey);
       if (!title) return;
 
       const details = prompt("Task details?");
       if (!details) return;
 
+      // Add the new task to the list and update localStorage
       tasks.push({ title, details, date: dateKey });
       localStorage.setItem("tasks", JSON.stringify(tasks));
+
+      // Re-render the calendar and tasks after adding the new task
       renderCalendar();
       renderTasks();
     };
 
+    // Append the dayDiv to the calendarDiv
     calendarDiv.appendChild(dayDiv);
   }
 }
 
-
-    // Check if there are tasks for this day
-    tasks.forEach(task => {
-      const taskDate = new Date(task.date);
-      if (taskDate.getDate() === day && taskDate.getMonth() === currentMonth && taskDate.getFullYear() === currentYear) {
-        dayDiv.innerHTML += `<br><small>${task.title}</small>`;
-      }
-    });
-    // Add a click listener to allow editing tasks for that day
-    dayDiv.addEventListener("click", () => {
-      const taskTitle = prompt("Enter task details for " + day + ":");
-      if (taskTitle) {
-        const taskDate = `${currentYear}-${currentMonth + 1}-${day}`;
-        addTask(taskTitle, taskDate); // Add the task for the clicked day
-      }
-    });
-
-
-
-    calendarDiv.appendChild(dayDiv);
-  }
-}
-
-// Function to add a task
+// Function to add a new task (from the task form)
 function addTask() {
   const title = document.getElementById("task-title").value.trim();
   const date = document.getElementById("task-date").value;
@@ -97,13 +84,14 @@ function addTask() {
     return;
   }
 
+  // Push the new task to the tasks array and update localStorage
   tasks.push({ title, details, date });
   localStorage.setItem("tasks", JSON.stringify(tasks));
 
+  // Re-render tasks and calendar after adding a new task
   renderTasks();
   renderCalendar();
 }
-
 
 // Initial render of tasks and calendar
 renderTasks();
