@@ -8,20 +8,49 @@ let archivedTasks = JSON.parse(localStorage.getItem("archivedTasks") || "[]");
 
 // Function to render tasks (including Archive and Delete buttons)
 function renderTasks() {
-  taskListDiv.innerHTML = "";
-  tasks.forEach((task, index) => {
-    const taskDiv = document.createElement("div");
-    taskDiv.classList.add("card");
-    taskDiv.innerHTML = `
-      <h4>${task.title}</h4>
-      <p>${task.details}</p>
-      <p>Date: ${task.date}</p>
-      <button onclick="archiveTask(${index})">Archive</button>
-      <button onclick="deleteTask(${index})">Delete</button>
-    `;
-    taskListDiv.appendChild(taskDiv);
+  taskListDiv.innerHTML = ""; // Clear the current task list
+
+  // Group tasks by folder
+  const groupedTasks = {
+    Research: [],
+    Practice: [],
+    Tournaments: [],
+  };
+
+  // Loop through all tasks and group them by folder
+  tasks.forEach(task => {
+    if (groupedTasks[task.folder]) {
+      groupedTasks[task.folder].push(task);
+    }
+  });
+
+  // Create sections for each folder
+  Object.keys(groupedTasks).forEach(folder => {
+    if (groupedTasks[folder].length > 0) {
+      const folderDiv = document.createElement("div");
+      folderDiv.classList.add("folder-section");
+
+      const folderHeader = document.createElement("h3");
+      folderHeader.innerText = folder; // Folder name (e.g., "Research")
+      folderDiv.appendChild(folderHeader);
+
+      // Create a list of tasks for this folder
+      groupedTasks[folder].forEach(task => {
+        const taskDiv = document.createElement("div");
+        taskDiv.classList.add("card");
+        taskDiv.innerHTML = `
+          <h4>${task.title}</h4>
+          <p>${task.details}</p>
+          <p>Date: ${task.date}</p>
+        `;
+        folderDiv.appendChild(taskDiv);
+      });
+
+      taskListDiv.appendChild(folderDiv);
+    }
   });
 }
+
 
 // Function to archive a task (move it to archivedTasks)
 function archiveTask(index) {
