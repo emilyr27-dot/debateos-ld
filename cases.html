@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DebateOS – Cases</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Manage Your Cases</h1>
+
+  <div class="card">
+    <h3>Create New Case</h3>
+    <input id="title" placeholder="Case title" />
+    <textarea id="content" placeholder="Case content"></textarea>
+    <button onclick="saveCase()">Save Case</button>
+  </div>
+
+  <div class="card">
+    <h3>Saved Cases</h3>
+    <div id="cases"></div>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="cases.js"></script>
+</body>
+</html>
