@@ -41,16 +41,24 @@ function renderCalendar() {
         dayDiv.innerHTML += `<br><small>${task.title}</small>`;
       }
     });
+    // Add a click listener to allow editing tasks for that day
+    dayDiv.addEventListener("click", () => {
+      const taskTitle = prompt("Enter task details for " + day + ":");
+      if (taskTitle) {
+        const taskDate = `${currentYear}-${currentMonth + 1}-${day}`;
+        addTask(taskTitle, taskDate); // Add the task for the clicked day
+      }
+    });
+
+
 
     calendarDiv.appendChild(dayDiv);
   }
 }
 
 // Function to add a task
-function addTask() {
-  const title = document.getElementById("task-title").value.trim();
-  const date = document.getElementById("task-date").value.trim();
-  const details = document.getElementById("task-details").value.trim();
+function addTask(title, date) {
+  const details = prompt("Enter task details:");
 
   if (!title || !date || !details) return alert("Please fill in all fields.");
 
@@ -61,6 +69,7 @@ function addTask() {
   renderTasks(); // Re-render tasks
   renderCalendar(); // Re-render calendar with new tasks
 }
+
 
 // Initial render of tasks and calendar
 renderTasks();
