@@ -22,17 +22,47 @@ function renderTasks() {
 
 // Function to render the calendar
 function renderCalendar() {
-  const daysInMonth = new Date(2026, 1, 0).getDate(); // Example: February 2026
-  const currentMonth = new Date().getMonth();
-  const currentYear = new Date().getFullYear();
+  const today = new Date();
+  const currentMonth = today.getMonth();
+  const currentYear = today.getFullYear();
 
-  calendarDiv.innerHTML = ""; // Clear current calendar
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-  // Create a grid of days
+  calendarDiv.innerHTML = "";
+
   for (let day = 1; day <= daysInMonth; day++) {
     const dayDiv = document.createElement("div");
-    dayDiv.classList.add("calendar-day");
-    dayDiv.innerHTML = day;
+    dayDiv.className = "calendar-day";
+    dayDiv.innerHTML = `<strong>${day}</strong>`;
+
+    const dateKey = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+
+    const dayTasks = tasks.filter(t => t.date === dateKey);
+
+    dayTasks.forEach(task => {
+      const taskEl = document.createElement("div");
+      taskEl.style.fontSize = "12px";
+      taskEl.textContent = "• " + task.title;
+      dayDiv.appendChild(taskEl);
+    });
+
+    dayDiv.onclick = () => {
+      const title = prompt("Task title for " + dateKey);
+      if (!title) return;
+
+      const details = prompt("Task details?");
+      if (!details) return;
+
+      tasks.push({ title, details, date: dateKey });
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+      renderCalendar();
+      renderTasks();
+    };
+
+    calendarDiv.appendChild(dayDiv);
+  }
+}
+
 
     // Check if there are tasks for this day
     tasks.forEach(task => {
@@ -57,17 +87,21 @@ function renderCalendar() {
 }
 
 // Function to add a task
-function addTask(title, date) {
-  const details = prompt("Enter task details:");
+function addTask() {
+  const title = document.getElementById("task-title").value.trim();
+  const date = document.getElementById("task-date").value;
+  const details = document.getElementById("task-details").value.trim();
 
-  if (!title || !date || !details) return alert("Please fill in all fields.");
+  if (!title || !date || !details) {
+    alert("Please fill in all fields");
+    return;
+  }
 
-  const newTask = { title, date, details };
-  tasks.push(newTask);
+  tasks.push({ title, details, date });
   localStorage.setItem("tasks", JSON.stringify(tasks));
 
-  renderTasks(); // Re-render tasks
-  renderCalendar(); // Re-render calendar with new tasks
+  renderTasks();
+  renderCalendar();
 }
 
 
