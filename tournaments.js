@@ -54,6 +54,7 @@ function renderTasks() {
     }
   });
 }
+
 // Function to delete a task
 function deleteTask(taskDate) {
   // Filter out the task with the given date
@@ -63,7 +64,7 @@ function deleteTask(taskDate) {
   renderTasks(); // Re-render the tasks after deletion
 }
 
-// Function to archive a task
+// Function to archive a task (move it to archivedTasks)
 function archiveTask(taskDate) {
   // Find the task by its date and mark it as archived
   tasks = tasks.map(task => {
@@ -75,28 +76,6 @@ function archiveTask(taskDate) {
   localStorage.setItem("tasks", JSON.stringify(tasks)); // Save to localStorage
 
   renderTasks(); // Re-render the tasks after archiving
-}
-
-// Function to archive a task (move it to archivedTasks)
-function archiveTask(index) {
-  const taskToArchive = tasks.splice(index, 1)[0];
-  archivedTasks.push(taskToArchive);
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-  localStorage.setItem("archivedTasks", JSON.stringify(archivedTasks));
-  renderTasks();
-}
-
-// Function to delete a task (remove it permanently)
-function deleteTask(index) {
-  // Remove the task from the tasks array
-  tasks.splice(index, 1);
-  
-  // Update localStorage and re-render the task list
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-  
-  // Re-render the tasks and calendar after deletion
-  renderTasks();
-  renderCalendar();
 }
 
 // Function to render the calendar (including the month name)
@@ -137,7 +116,7 @@ function renderCalendar() {
       const details = prompt("Task details?");
       if (!details) return;
 
-      tasks.push({ title, details, date: dateKey });
+      tasks.push({ title, details, date: dateKey, folder: "Tournaments" }); // Default folder "Tournaments"
       localStorage.setItem("tasks", JSON.stringify(tasks));
       renderCalendar();
       renderTasks();
