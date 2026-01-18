@@ -24,18 +24,18 @@
 
       <label>Title</label>
       <input id="editor-title" placeholder="Case title" />
-      <button onclick="addComment('title')">💬 Comment</button>
+      <button onclick="openCommentEditor('title')">💬 Comment</button>
 
       <label>Folder</label>
       <input id="editor-folder" placeholder="Folder" />
-      <button onclick="addComment('folder')">💬 Comment</button>
+      <button onclick="openCommentEditor('folder')">💬 Comment</button>
 
       <label>Side</label>
       <select id="editor-side">
         <option value="Aff">Aff</option>
         <option value="Neg">Neg</option>
       </select>
-      <button onclick="addComment('side')">💬 Comment</button>
+      <button onclick="openCommentEditor('side')">💬 Comment</button>
     </div>
 
     <!-- FRAMEWORK -->
@@ -44,11 +44,11 @@
 
       <label>Value</label>
       <input id="editor-value" placeholder="Value" />
-      <button onclick="addComment('value')">💬 Comment</button>
+      <button onclick="openCommentEditor('value')">💬 Comment</button>
 
       <label>Criterion</label>
       <input id="editor-criterion" placeholder="Criterion" />
-      <button onclick="addComment('criterion')">💬 Comment</button>
+      <button onclick="openCommentEditor('criterion')">💬 Comment</button>
     </div>
 
     <!-- TOPCASE -->
@@ -57,15 +57,15 @@
 
       <label>Intro</label>
       <textarea id="editor-intro" rows="4"></textarea>
-      <button onclick="addComment('intro')">💬 Comment</button>
+      <button onclick="openCommentEditor('intro')">💬 Comment</button>
 
       <label>Resolutional Analysis</label>
       <textarea id="editor-res-analysis" rows="4"></textarea>
-      <button onclick="addComment('resolutionalAnalysis')">💬 Comment</button>
+      <button onclick="openCommentEditor('resolutionalAnalysis')">💬 Comment</button>
 
       <label>Offcase Arguments</label>
       <textarea id="editor-offcase" rows="4"></textarea>
-      <button onclick="addComment('offcaseArguments')">💬 Comment</button>
+      <button onclick="openCommentEditor('offcaseArguments')">💬 Comment</button>
     </div>
 
     <!-- CONTENTIONS -->
@@ -91,6 +91,18 @@
     <div id="comments-list"></div>
   </div>
 
+</div>
+
+<!-- =====================
+     INLINE COMMENT EDITOR
+====================== -->
+<div id="comment-editor" class="card" style="display:none; max-width: 400px;">
+  <h4>New Comment</h4>
+  <textarea id="comment-draft" rows="4" placeholder="Write your comment..."></textarea>
+  <div style="margin-top: 8px;">
+    <button onclick="saveComment()">Save</button>
+    <button onclick="closeCommentEditor()">Cancel</button>
+  </div>
 </div>
 
 <script src="app.js"></script>
