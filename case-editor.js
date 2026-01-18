@@ -98,3 +98,56 @@ function addContention() {
     tag: `Contention ${currentCase.contentions.length + 1}`,
     text: "",
     highlights: [],
+/* ============================
+   COMMENTS SYSTEM (MINIMAL)
+============================ */
+
+function addComment(section, targetId = null) {
+  const text = prompt("Enter your comment:");
+  if (!text) return;
+
+  if (!currentCase.comments) {
+    currentCase.comments = [];
+  }
+
+  currentCase.comments.push({
+    id: generateId(),
+    section,
+    targetId,
+    text,
+    createdAt: Date.now()
+  });
+
+  saveData("cases", cases);
+  renderComments();
+}
+
+function renderComments() {
+  const list = document.getElementById("comments-list");
+  if (!list) return;
+
+  list.innerHTML = "";
+
+  if (!currentCase.comments || currentCase.comments.length === 0) {
+    list.innerHTML = "<p>No comments yet.</p>";
+    return;
+  }
+
+  currentCase.comments.forEach(c => {
+    const div = document.createElement("div");
+    div.className = "comment";
+
+    div.innerHTML = `
+      <p><strong>${c.section}</strong></p>
+      <p>${c.text}</p>
+      <small>${new Date(c.createdAt).toLocaleString()}</small>
+    `;
+
+    list.appendChild(div);
+  });
+}
+
+function toggleComments() {
+  const panel = document.getElementById("comments-panel");
+  panel.style.display = panel.style.display === "none" ? "block" : "none";
+}
