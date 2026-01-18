@@ -1,5 +1,6 @@
 let cases = [];
 let currentCase = null;
+let activeCommentSection = null;
 
 /* ============================
    LOAD CASE
@@ -14,19 +15,13 @@ function loadCase() {
   currentCase = cases.find(c => c.id === caseId);
   if (!currentCase) return alert("Case not found");
 
-  // Ensure comments array exists (backward compatibility)
-  if (!currentCase.comments) {
-    currentCase.comments = [];
-  }
+  if (!currentCase.comments) currentCase.comments = [];
 
-  // Populate fields
   document.getElementById("editor-title").value = currentCase.title || "";
   document.getElementById("editor-folder").value = currentCase.folder || "";
   document.getElementById("editor-side").value = currentCase.side || "Aff";
-
   document.getElementById("editor-value").value = currentCase.value || "";
   document.getElementById("editor-criterion").value = currentCase.criterion || "";
-
   document.getElementById("editor-intro").value = currentCase.intro || "";
   document.getElementById("editor-res-analysis").value =
     currentCase.resolutionalAnalysis || "";
@@ -45,10 +40,8 @@ function saveCase() {
   currentCase.title = document.getElementById("editor-title").value.trim();
   currentCase.folder = document.getElementById("editor-folder").value.trim();
   currentCase.side = document.getElementById("editor-side").value;
-
   currentCase.value = document.getElementById("editor-value").value.trim();
   currentCase.criterion = document.getElementById("editor-criterion").value.trim();
-
   currentCase.intro = document.getElementById("editor-intro").value;
   currentCase.resolutionalAnalysis =
     document.getElementById("editor-res-analysis").value;
@@ -56,17 +49,11 @@ function saveCase() {
     document.getElementById("editor-offcase").value;
 
   currentCase.updatedAt = Date.now();
-
   saveData("cases", cases);
-  alert("Saved");
-}
-
-function goBack() {
-  window.location.href = "cases.html";
 }
 
 /* ============================
-   CONTENTIONS
+   CONTENTIONS (unchanged)
 ============================ */
 
 function renderContentions() {
@@ -76,18 +63,10 @@ function renderContentions() {
   currentCase.contentions.forEach(con => {
     const div = document.createElement("div");
     div.className = "card";
-
     div.innerHTML = `
-      <input
-        value="${con.tag}"
-        onchange="updateContentionTag('${con.id}', this.value)"
-      />
-      <textarea
-        rows="6"
-        onchange="updateContentionText('${con.id}', this.value)"
-      >${con.text}</textarea>
+      <input value="${con.tag}" onchange="con.tag=this.value" />
+      <textarea rows="6" onchange="con.text=this.value">${con.text}</textarea>
     `;
-
     container.appendChild(div);
   });
 }
@@ -103,47 +82,54 @@ function addContention() {
   renderContentions();
 }
 
-function updateContentionTag(id, value) {
-  const c = currentCase.contentions.find(c => c.id === id);
-  if (c) c.tag = value;
-}
-
-function updateContentionText(id, value) {
-  const c = currentCase.contentions.find(c => c.id === id);
-  if (c) c.text = value;
-}
-
 /* ============================
-   COMMENTS (WORKING VERSION)
+   COMMENTS – INLINE EDITOR
 ============================ */
 
-function addComment(section) {
-  const text = prompt("Write your comment:");
+function openCommentEditor(section) {
+  activeCommentSection = section;
+  document.getElementById("comment-draft").value = "";
+  document.getElementById("comment-editor").style.display = "block";
+}
+
+function saveComment() {
+  const text = document.getElementById("comment-draft").value.trim();
   if (!text) return;
 
   currentCase.comments.push({
     id: generateId(),
-    section,
+    section: activeCommentSection,
     text,
+    archived: false,
     createdAt: Date.now()
   });
 
   saveData("cases", cases);
+  closeCommentEditor();
   renderComments();
 }
 
+function closeCommentEditor() {
+  document.getElementById("comment-editor").style.display = "none";
+  activeCommentSection = null;
+}
+
+/* ============================
+   COMMENT SIDEBAR
+============================ */
+
 function renderComments() {
   const list = document.getElementById("comments-list");
-  if (!list) return;
-
   list.innerHTML = "";
 
-  if (currentCase.comments.length === 0) {
+  const visible = currentCase.comments.filter(c => !c.archived);
+
+  if (visible.length === 0) {
     list.innerHTML = "<p>No comments yet.</p>";
     return;
   }
 
-  currentCase.comments.forEach(c => {
+  visible.forEach(c => {
     const div = document.createElement("div");
     div.className = "comment";
 
@@ -151,16 +137,32 @@ function renderComments() {
       <strong>${c.section}</strong>
       <p>${c.text}</p>
       <small>${new Date(c.createdAt).toLocaleString()}</small>
+      <div class="comment-actions">
+        <button onclick="archiveComment('${c.id}')">Archive</button>
+        <button onclick="deleteComment('${c.id}')">Delete</button>
+      </div>
     `;
 
     list.appendChild(div);
   });
 }
 
+function deleteComment(id) {
+  currentCase.comments = currentCase.comments.filter(c => c.id !== id);
+  saveData("cases", cases);
+  renderComments();
+}
+
+function archiveComment(id) {
+  const c = currentCase.comments.find(c => c.id === id);
+  if (c) c.archived = true;
+  saveData("cases", cases);
+  renderComments();
+}
+
 function toggleComments() {
   const panel = document.getElementById("comments-panel");
-  panel.style.display =
-    panel.style.display === "none" ? "block" : "none";
+  panel.style.display = panel.style.display === "none" ? "block" : "none";
 }
 
 /* ============================
