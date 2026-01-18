@@ -54,11 +54,11 @@ textarea {
 }
 
 /* ============================
-   BUTTONS
+   BUTTONS (STANDARD)
 ============================ */
 
 button {
-  background: #DDA0EB; /* NEW purple */
+  background: #DDA0EB; /* purple */
   color: #2D2A4A;
   border: none;
   padding: 8px 14px;
@@ -71,6 +71,45 @@ button {
 
 button:hover {
   background: #c88fe0;
+}
+
+/* ============================
+   DASHBOARD BUTTONS (WITH GIF ICONS)
+============================ */
+
+.dashboard-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+
+  background: #DDA0EB;
+  color: #2D2A4A;
+
+  padding: 12px 18px;
+  margin-bottom: 14px;
+
+  border-radius: 16px;
+  text-decoration: none;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  font-weight: bold;
+
+  width: fit-content;
+
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dashboard-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.btn-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 /* ============================
@@ -96,7 +135,7 @@ button:hover {
 
 #comments-list .comment {
   background: #ffffff;
-  border-left: 4px solid #DDA0EB; /* NEW purple */
+  border-left: 4px solid #DDA0EB;
   padding: 8px;
   margin-bottom: 8px;
   border-radius: 6px;
@@ -131,7 +170,7 @@ button:hover {
 .calendar-day {
   padding: 15px;
   text-align: center;
-  background-color: #EAFBFB; /* new blue tint */
+  background-color: #EAFBFB;
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
@@ -139,12 +178,12 @@ button:hover {
 }
 
 .calendar-day:hover {
-  background-color: #90F5F5; /* NEW blue */
+  background-color: #90F5F5;
   color: #2D2A4A;
 }
 
 .calendar-day.today {
-  background-color: #DDA0EB; /* NEW purple */
+  background-color: #DDA0EB;
   color: #2D2A4A;
   font-weight: bold;
 }
