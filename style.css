@@ -181,6 +181,22 @@ button:hover {
   background-color: #90F5F5;
   color: #2D2A4A;
 }
+/* ============================
+   PAGE TITLE ICONS
+============================ */
+
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.page-title img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
 
 .calendar-day.today {
   background-color: #DDA0EB;
