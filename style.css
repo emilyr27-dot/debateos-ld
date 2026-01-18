@@ -203,3 +203,13 @@ button:hover {
   color: #2D2A4A;
   font-weight: bold;
 }
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.page-title-icon {
+  height: 32px;
+  width: auto;
+}
