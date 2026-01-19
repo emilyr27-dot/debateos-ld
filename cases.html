@@ -1,39 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>DebateOS – Cases</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<h1 class="page-title">
-  DebateOS – Cases
-  <img src="assets/icons/cases.gif" alt="Cases icon">
-</h1>
+<h1>DebateOS – Cases 🗂️</h1>
 
-  <!-- CREATE NEW CASE (DOC) -->
-  <div class="card">
-    <h3>Create New Case</h3>
+<div class="card">
+  <h3>Create New Case</h3>
 
-    <input id="title" placeholder="Case title" />
-    <input id="folder" placeholder="Folder (e.g. Sept/Oct)" />
+  <input id="new-case-title" placeholder="Case title" />
+  <input id="new-case-folder" placeholder="Folder (e.g. Sept/Oct)" />
 
-    <select id="side">
+  <div class="actions">
+    <select id="new-case-side">
       <option value="Aff">Aff</option>
       <option value="Neg">Neg</option>
     </select>
-
     <button onclick="createCase()">Create Case</button>
   </div>
+</div>
 
-  <!-- CASE LIST -->
-  <div class="card">
-    <h3>Your Cases</h3>
-    <div id="cases"></div>
-  </div>
+<div class="card">
+  <h3>Your Cases</h3>
+  <div id="cases-list"></div>
+</div>
 
-  <script src="app.js"></script>
-  <script src="cases.js"></script>
+<!-- ACTIONS -->
+<div class="card">
+  <button onclick="goToDashboard()">Back to Dashboard</button>
+</div>
+
+<script src="app.js"></script>
+<script src="cases.js"></script>
+
 </body>
 </html>
