@@ -160,3 +160,7 @@ function deleteCase(caseId) {
 // ============================
 
 renderCases();
+function goToDashboard() {
+  window.location.href = "index.html";
+}
+
