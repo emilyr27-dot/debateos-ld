@@ -21,20 +21,18 @@
 
   <!-- INPUT -->
   <div class="card">
-    <textarea
-      id="user-input"
+   <textarea id="prompt">
       rows="4"
       placeholder="Paste an argument, ask for a rebuttal, or request practice..."
     ></textarea>
 
     <div class="actions">
-      <button onclick="sendMessage()">Send</button>
+<button type="button" onclick="askAI()">Send</button>
       <button onclick="location.href='index.html'">Back to Dashboard</button>
     </div>
   </div>
 
-  <script src="app.js"></script>
-  <script src="aiassistant.js"></script>
+  <script src="assistant.js"></script>
 
 </body>
 </html>
