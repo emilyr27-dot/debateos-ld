@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>DebateOS – AI Assistant</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<h1>DebateOS – AI Practice Debater 🤖</h1>
+
+<div class="card">
+  <h3>Enter your argument or case text</h3>
+
+  <textarea
+    id="prompt"
+    rows="10"
+    placeholder="Paste a contention, block, or full case here..."
+  ></textarea>
+
+  <div class="actions">
+    <select id="mode">
+      <option value="refine">Refine / Improve</option>
+      <option value="judge">Judge Feedback</option>
+      <option value="opponent">Opponent Cross-Ex</option>
+    </select>
+
+    <button onclick="askAI()">Ask AI</button>
+  </div>
+</div>
+
+<div class="card">
+  <h3>AI Response</h3>
+  <pre id="response"></pre>
+</div>
+
+<div class="card">
+  <button onclick="goToDashboard()">Back to Dashboard</button>
+</div>
+
+<script src="assistant.js"></script>
+</body>
+</html>
