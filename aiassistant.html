@@ -12,10 +12,29 @@
     <img src="assets/icons/aiassistant.gif" class="page-title-icon" alt="AI Assistant icon">
   </h1>
 
-  <p>AI Assistant Page (Coming Soon)</p>
-  <p>This page will allow you to interact with the AI to practice, refine, and edit cases.</p>
+  <p>This AI helps you practice, refine, and stress-test debate cases.</p>
 
-  <button onclick="location.href='index.html'">Back to Dashboard</button>
+  <!-- CHAT WINDOW -->
+  <div class="card" id="chat-box" style="height: 400px; overflow-y: auto;">
+    <p><em>AI ready. Ask for feedback, a rebuttal, or a practice round.</em></p>
+  </div>
+
+  <!-- INPUT -->
+  <div class="card">
+    <textarea
+      id="user-input"
+      rows="4"
+      placeholder="Paste an argument, ask for a rebuttal, or request practice..."
+    ></textarea>
+
+    <div class="actions">
+      <button onclick="sendMessage()">Send</button>
+      <button onclick="location.href='index.html'">Back to Dashboard</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="aiassistant.js"></script>
 
 </body>
 </html>
