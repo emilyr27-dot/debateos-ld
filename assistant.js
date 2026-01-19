@@ -2,7 +2,7 @@ const FUNCTION_URL =
   "https://cuzqxhwnmshkuuxclpkr.supabase.co/functions/v1/ai-assistant";
 
 // ⬇️ PASTE YOUR *ANON PUBLIC KEY* FROM SUPABASE HERE
-const SUPABASE_ANON_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN1enF4aHdubXNoa3V1eGNscGtyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg2MjgxNzEsImV4cCI6MjA4NDIwNDE3MX0.Zn_71T7-cVrKCVMLtvPXpqX9Ox0Nm5UiyuZHoKRHqJQ;
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN1enF4aHdubXNoa3V1eGNscGtyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg2MjgxNzEsImV4cCI6MjA4NDIwNDE3MX0.Zn_71T7-cVrKCVMLtvPXpqX9Ox0Nm5UiyuZHoKRHqJQ";
 
 async function askAI() {
   const inputEl = document.getElementById("prompt");
