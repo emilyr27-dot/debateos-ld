@@ -53,7 +53,20 @@ function saveCase() {
 }
 
 /* ============================
-   CONTENTIONS (unchanged)
+   SAVE + RETURN TO DASHBOARD
+============================ */
+
+function saveAndReturnToDashboard() {
+  saveCase();
+
+  // small delay ensures localStorage write completes
+  setTimeout(() => {
+    window.location.href = "index.html";
+  }, 100);
+}
+
+/* ============================
+   CONTENTIONS
 ============================ */
 
 function renderContentions() {
