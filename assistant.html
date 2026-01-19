@@ -25,17 +25,21 @@
       <option value="opponent">Opponent Cross-Ex</option>
     </select>
 
-    <button onclick="askAI()">Ask AI</button>
+    <!-- IMPORTANT: type="button" -->
+    <button type="button" onclick="askAI()">Ask AI</button>
   </div>
 </div>
 
 <div class="card">
   <h3>AI Response</h3>
-  <pre id="response"></pre>
+  <pre
+    id="response"
+    style="white-space: pre-wrap;"
+  ></pre>
 </div>
 
 <div class="card">
-  <button onclick="goToDashboard()">Back to Dashboard</button>
+  <button type="button" onclick="goToDashboard()">Back to Dashboard</button>
 </div>
 
 <script src="assistant.js"></script>
