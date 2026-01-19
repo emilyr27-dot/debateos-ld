@@ -39,22 +39,29 @@ async function askAI() {
       })
     });
 
-    const data = await res.json();
+   let data;
+try {
+  data = await res.json();
+} catch {
+  throw new Error("Invalid response from AI service");
+}
 
-    // Remove "thinking..."
-    thinkingEl.remove();
+if (!res.ok) {
+  throw new Error(data.error || "AI request failed");
+}
 
-    if (!res.ok) {
-      throw new Error(data.error || "AI request failed");
-    }
+if (!data.reply) {
+  throw new Error("No reply received from AI");
+}
 
-    // Show AI reply
-    chatBox.innerHTML += `<p><strong>AI:</strong> ${data.reply}</p>`;
-    chatBox.scrollTop = chatBox.scrollHeight;
+// Remove "thinking..."
+if (chatBox.lastElementChild) {
+  chatBox.lastElementChild.remove();
+}
 
-  } catch (err) {
-    thinkingEl.remove();
-    chatBox.innerHTML += `<p style="color:red;">Error: ${err.message}</p>`;
+// Show AI reply
+chatBox.innerHTML += `<p><strong>AI:</strong> ${data.reply}</p>`;
+
   }
 }
 
