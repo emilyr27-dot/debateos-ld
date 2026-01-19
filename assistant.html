@@ -7,14 +7,22 @@
 </head>
 <body>
 
-<h1>DebateOS – AI Practice Debater 🤖</h1>
+<h1>DebateOS – AI Assistant</h1>
+
+<!-- Sidebar (hidden by default) -->
+<div id="chat-sidebar" class="sidebar">
+  <h3>Saved Chats</h3>
+  <div id="saved-chats"></div>
+</div>
+
+<button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
 
 <div class="card">
   <h3>Enter your argument or case text</h3>
 
   <textarea
     id="prompt"
-    rows="10"
+    rows="4"
     placeholder="Paste a contention, block, or full case here..."
   ></textarea>
 
@@ -25,17 +33,17 @@
       <option value="opponent">Opponent Cross-Ex</option>
     </select>
 
-    <!-- IMPORTANT: type="button" -->
     <button type="button" onclick="askAI()">Ask AI</button>
+    <button type="button" onclick="clearChat()">Clear</button>
+    <button type="button" onclick="saveChat()">Save</button>
   </div>
 </div>
 
 <div class="card">
   <h3>AI Response</h3>
-  <pre
-    id="response"
-    style="white-space: pre-wrap;"
-  ></pre>
+
+  <!-- Chat container replaces static <pre> behavior -->
+  <div id="chat-box" class="chat-box"></div>
 </div>
 
 <div class="card">
